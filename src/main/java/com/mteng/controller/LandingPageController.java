@@ -26,6 +26,13 @@ public class LandingPageController {
         return "index";
     }
 
+    @RequestMapping(value = "/jumbo", method = RequestMethod.GET)
+    public String landingJumbo(ModelMap model) {
+
+        model.addAttribute("message", "Spring 3 MVC Hello World");
+        return "jumbo";
+    }
+
     @RequestMapping(value = "/dashboard", method = RequestMethod.GET)
     public String resultPage(ModelMap model) {
 

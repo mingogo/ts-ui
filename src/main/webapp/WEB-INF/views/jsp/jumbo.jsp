@@ -1,20 +1,6 @@
 <!DOCTYPE html>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="en">
   <head>
-  <script type="text/javascript">
-  function validate(){
-      x=document.myForm
-      input=x.myInput.value
-      if (input.length>5){
-          alert("The field cannot contain more than 5 characters!")
-          return false
-      }else {
-          return true
-      }
-  }
-  </script>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -23,7 +9,7 @@
     <meta name="author" content="">
     <link rel="icon" href="/resources/core/favicon.ico">
 
-    <title>Dashboard Template for Bootstrap</title>
+    <title>Jumbotron Template for Bootstrap</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/resources/core/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -32,7 +18,7 @@
     <link href="/resources/core/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="/resources/core/css/dashboard.css" rel="stylesheet">
+    <link href="/resources/core/css/jumbotron.css" rel="stylesheet">
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -60,32 +46,19 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <form class="navbar-form navbar-right" method="POST" action="phonesubmit">
-              <input type="text" name="phoneNum" placeholder="e.g. 1234" class="form-control" required autofocus pattern="[0-9]">
+              <input type="number" name="phoneNum" placeholder="e.g. 1234" class="form-control" required autofocus">
             <button type="submit" class="btn btn-success">Submit</button>
           </form>
         </div><!--/.navbar-collapse -->
       </div>
     </nav>
 
-    <div class="container">
-      <div class="row">
-          <h2 class="sub-header">${number}, ${count} combination(s) found:</h2>
-          <div class="table-responsive">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th>#</th>
-                </tr>
-              </thead>
-              <tbody>
-              <c:forEach items="${entries}" var="entry">
-                  <tr>
-                      <td>${entry}</td>
-                  </tr>
-              </c:forEach>
-              </tbody>
-            </table>
-          </div>
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+      <div class="container">
+        <h1>Hello, Finra!</h1>
+        <p> This is a simple web application generating all possible alphanumeric combinations based on the number input. Simply click on the sample output below or enter your own on the top banner. </p>
+        <p><a class="btn btn-primary btn-lg" href="sample" role="button">Sample output &raquo;</a></p>
       </div>
     </div>
 
@@ -101,14 +74,13 @@
       </footer>
     </div> <!-- /container -->
 
+
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
     <script src="../../dist/js/bootstrap.min.js"></script>
-    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
-    <script src="../../assets/js/vendor/holder.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
   </body>

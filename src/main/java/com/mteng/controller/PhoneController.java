@@ -28,6 +28,35 @@ public class PhoneController {
         return new ModelAndView("phone", "command", new Phone());
     }
 
+    @RequestMapping(value = "/sample", method = RequestMethod.GET)
+    public String samplePhone(
+            ModelMap model
+    ) {
+        UriComponentsBuilder URI = UriComponentsBuilder.newInstance();
+
+        URI.queryParam("page", "1");
+        URI.queryParam("size", "100");
+        URI.scheme("http").host("www.mteng-ts-api.elasticbeanstalk.com").path("/api/v1/number/" + "3612321754").build();
+
+        logger.info(URI.build().toUriString());
+
+        RestTemplate restTemplate = new RestTemplate();
+        String resp = restTemplate.getForObject(URI.toUriString(), String.class);
+        ObjectMapper mapper = new ObjectMapper();
+        TSRespContainer container = new TSRespContainer();
+
+        try {
+            container = mapper.readValue(resp, TSRespContainer.class);
+        } catch (IOException e) {
+            //TODO: Handle this exception
+            e.printStackTrace();
+        }
+        model.addAttribute("entries", container.getCombinations());
+        model.addAttribute("number", "3612321754");
+        model.addAttribute("count", container.getCount());
+        return "dashboard";
+    }
+
     @RequestMapping(value = "/phonesubmit", method = RequestMethod.POST)
     public String phoneSubmit(
             @ModelAttribute("SpringWeb") Phone phone,
