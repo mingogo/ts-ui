@@ -1,11 +1,9 @@
 package com.mteng.controller;
 
 import com.mteng.model.Phone;
-import com.mteng.model.Student;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -28,6 +26,13 @@ public class LandingPageController {
         return "index";
     }
 
+    @RequestMapping(value = "/dashboard", method = RequestMethod.GET)
+    public String resultPage(ModelMap model) {
+
+        model.addAttribute("message", "Spring 3 MVC Hello World");
+        return "dashboard";
+    }
+
 //    @RequestMapping(value = "/hello/{name:.+}", method = RequestMethod.GET)
 //    public ModelAndView hello(@PathVariable("name") String name) {
 //
@@ -43,19 +48,6 @@ public class LandingPageController {
 //        return new ModelAndView("student", "command", new Student());
 //    }
 
-    @RequestMapping(value = "/phone", method = RequestMethod.GET)
-    public ModelAndView phone() {
-        return new ModelAndView("phone", "command", new Phone());
-    }
-
-    @RequestMapping(value = "/phonesubmit", method = RequestMethod.POST)
-    public String phoneSubmit(
-            @ModelAttribute("SpringWeb") Phone phone,
-            ModelMap model
-    ) {
-        model.addAttribute("number", phone.getPhoneNum());
-        return "phoneResult";
-    }
 
 //    @RequestMapping(value = "/addStudent", method = RequestMethod.POST)
 //    public String addStudent(

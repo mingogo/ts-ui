@@ -10,6 +10,10 @@
     <tr>
         <td>phone number</td>
         <td>${number}</td>
+        <td>URI</td>
+        <td>${URI}</td>
+        <td>count</td>
+        <td>${count}</td>
     </tr>
 </table>
 </body>
