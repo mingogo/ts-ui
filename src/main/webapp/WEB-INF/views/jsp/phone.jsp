@@ -37,10 +37,9 @@
 
     <div class="container">
 
-      <form class="form-signin" action="hello">
+      <form class="form-signin" method="POST" action="phonesubmit">
         <h2 class="form-signin-heading"> Enter Phone Number </h2>
-        <label for="inputEmail" class="sr-only">Email address</label>
-        <input type="number" id="inputEmail" class="form-control" placeholder="e.g. 3612321754" required autofocus>
+        <input type="number" name="phoneNum" class="form-control" placeholder="e.g. 3612321754" required autofocus>
         <button class="btn btn-lg btn-primary btn-block" type="submit">submit</button>
       </form>
 
