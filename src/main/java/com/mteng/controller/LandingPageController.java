@@ -20,6 +20,14 @@ public class LandingPageController {
 
     }
 
+    @RequestMapping(value = "/index", method = RequestMethod.GET)
+    public String landingPage(ModelMap model) {
+
+        model.addAttribute("message", "Spring 3 MVC Hello World");
+        return "index";
+
+    }
+
     @RequestMapping(value = "/hello/{name:.+}", method = RequestMethod.GET)
     public ModelAndView hello(@PathVariable("name") String name) {
 
