@@ -38,7 +38,7 @@ public class PhoneController {
         UriComponentsBuilder URI = UriComponentsBuilder.newInstance();
 
         URI.queryParam("page", "1");
-        URI.queryParam("size", "10");
+        URI.queryParam("size", "100");
         URI.scheme("http").host("www.mteng-ts-api.elasticbeanstalk.com").path("/api/v1/number/" + phone.getPhoneNum()).build();
 
         logger.info(URI.build().toUriString());
@@ -57,6 +57,8 @@ public class PhoneController {
         model.addAttribute("number", phone.getPhoneNum());
         model.addAttribute("count", container.getCount());
         model.addAttribute("URI", URI.build());
-        return "phoneResult";
+        model.addAttribute("entries", container.getCombinations());
+        // return "phoneResult";
+        return "dashboard";
     }
 }

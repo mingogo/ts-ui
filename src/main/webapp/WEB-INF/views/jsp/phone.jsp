@@ -38,7 +38,6 @@
     <div class="container">
 
       <form class="form-signin" method="POST" action="phonesubmit">
-        <h2 class="form-signin-heading"> Enter Phone Number </h2>
         <input type="number" name="phoneNum" class="form-control" placeholder="e.g. 3612321754" required autofocus>
         <button class="btn btn-lg btn-primary btn-block" type="submit">submit</button>
       </form>
