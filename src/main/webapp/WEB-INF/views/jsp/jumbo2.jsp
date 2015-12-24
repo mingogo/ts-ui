@@ -42,12 +42,13 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="jumbo">Home</a>
+          <a class="navbar-brand" href="jumbo2">Home</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-          <form class="navbar-form navbar-right" method="POST" action="phonesubmit">
-              <input pattern=".{7,10}" type="text" name="phoneNum" placeholder="7 or 10 digits." class="form-control" required">
-            <button type="submit" class="btn btn-success">Submit</button>
+          <form class="navbar-form navbar-right" method="POST" action="submit">
+              <input pattern=".{7,10}" type="text" name="phoneNum" id="phoneNum" placeholder="7/10 digits. e.g. 1234567" class="form-control" required>
+              <input type="hidden" name="page" value="1">
+            <button class="btn btn-success" id="formSubmit" >Submit</button>
           </form>
         </div><!--/.navbar-collapse -->
       </div>
@@ -70,7 +71,11 @@
       <hr>
 
       <footer>
-        <p>&copy; 2015 Ming Teng, all rights reserved. Powered by Spring Boot, SpringMVC, Amazon EC2/ ElasticBeanstalk, Google App Engine and Bootstrap.</p>
+            <div class="row">
+                <div class=" col-center-block">
+                    <p style="text-align: center;">&copy; 2015 Ming Teng, all rights reserved. Powered by Spring Boot, SpringMVC, Amazon EC2/ ElasticBeanstalk, Google App Engine and Bootstrap.</p>
+                </div>
+             </div>
       </footer>
     </div> <!-- /container -->
 

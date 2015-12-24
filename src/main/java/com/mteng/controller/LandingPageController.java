@@ -21,16 +21,12 @@ public class LandingPageController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String landingPage(ModelMap model) {
-
-        model.addAttribute("message", "Spring 3 MVC Hello World");
-        return "index";
+        return "jumbo2";
     }
 
-    @RequestMapping(value = "/jumbo", method = RequestMethod.GET)
+    @RequestMapping(value = "/jumbo2", method = RequestMethod.GET)
     public String landingJumbo(ModelMap model) {
-
-        model.addAttribute("message", "Spring 3 MVC Hello World");
-        return "jumbo";
+        return "jumbo2";
     }
 
     @RequestMapping(value = "/dashboard", method = RequestMethod.GET)

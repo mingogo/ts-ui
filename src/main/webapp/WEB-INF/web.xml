@@ -36,4 +36,25 @@
         </auth-constraint>
     </security-constraint>
 
+    <error-page>
+        <error-code>400</error-code>
+        <location>/WEB-INF/views/jsp/400.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>401</error-code>
+        <location>/WEB-INF/views/jsp/401.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>403</error-code>
+        <location>/WEB-INF/views/jsp/403.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/WEB-INF/views/jsp/404.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/WEB-INF/views/jsp/500.jsp</location>
+    </error-page>
+
 </web-app>
