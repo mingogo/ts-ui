@@ -42,10 +42,10 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="jumbo2">Home</a>
+          <a class="navbar-brand" href="/">Home</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-          <form class="navbar-form navbar-right" method="POST" action="submit">
+          <form class="navbar-form navbar-right" method="GET" action="/">
               <input pattern=".{7,10}" type="text" name="phoneNum" id="phoneNum" placeholder="7/10 digits. e.g. 1234567" class="form-control" required>
               <input type="hidden" name="page" value="1">
             <button class="btn btn-success" id="formSubmit" >Submit</button>
@@ -59,7 +59,7 @@
       <div class="container">
         <h1>OOPS.</h1>
         <p> The page you were trying to reach was not there. </p>
-        <p><a class="btn btn-primary btn-lg" href="sample" role="button">Sample output &raquo;</a></p>
+        <p><a class="btn btn-primary btn-lg" href="/" role="button">Sample output &raquo;</a></p>
       </div>
     </div>
 
