@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:text-align="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/resources/core/favicon.ico">
+
+    <title>Dashboard</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/resources/core/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="/resources/core/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/resources/core/css/dashboard.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]>
+    <script src="/resources/core/assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="/resources/core/assets/js/ie-emulation-modes-warning.js"></script>
+
+    <!--AngularJS-->
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+
+
+</head>
+
+<body ng-app="myApp" ng-controller="formControl">
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="jumbo">Home</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <form class="navbar-form navbar-right">
+                <input type="text" placeholder="7/10 digits. e.g. 1234567" class="form-control" ng-model="phoneNum" required>
+                <button class="btn btn-success" type="submit" ng-click="testAjax()">Submit</button>
+            </form>
+        </div><!--/.navbar-collapse -->
+    </div>
+</nav>
+
+<!-- Main jumbotron for a primary marketing message or call to action -->
+<div class="jumbotron">
+    <div class="container">
+        <h1>Hello, Finra!</h1>
+        <p> This is a simple web application generating all possible alphanumeric combinations based on the number input. Simply click on the sample output below or enter your own on the top banner. </p>
+        <p><a class="btn btn-primary btn-lg" href="dashboard" role="button">Sample output &raquo;</a></p>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <h2 class="sub-header">{{phoneNum}}, {{entriesCount}} combination(s) found:</h2>
+
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>#</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="x in names">
+                    <td> {{x}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <hr>
+    <div class="lead col-center-block">
+        <p style="text-align: center;">{{pageNum}}/{{lastPage}}</p>
+    </div>
+</div>
+
+<div style="text-align: center;" class="container">
+    <button class="btn btn-lg btn-info" ng-click="goFirstPage() ">First</button>
+    <button class="btn btn-lg btn-primary" ng-click="goPrevPage()">Prev</button>
+    <button class="btn btn-lg btn-success" ng-click="goNextPage()">Next</button>
+    <button class="btn btn-lg btn-warning" ng-click="goLastPage()">Last</button>
+</div>
+
+<div class="container">
+    <hr>
+    <footer>
+        <div class="row">
+            <div class="col-center-block">
+                <p style="text-align: center;">&copy; 2015 Ming Teng, all rights reserved. Powered by Spring Boot,
+                    SpringMVC, Amazon EC2/ ElasticBeanstalk, Google App Engine and Bootstrap.</p>
+            </div>
+        </div>
+    </footer>
+</div> <!-- /container -->
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+<script src="/resources/core/dist/js/bootstrap.min.js"></script>
+<!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+<script src="/resources/core/assets/js/vendor/holder.min.js"></script>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="resources/core/assets/js/ie10-viewport-bug-workaround.js"></script>
+<script>
+    var app = angular.module('myApp', []);
+
+    app.controller('formControl', function ($scope, $http) {
+        $scope.pageSize = "10";
+        $scope.pageNum = "1";
+        $scope.phoneNum = "3612321754";
+        $scope.entriesCount = "0";
+        $http.get("http://www.mteng-ts-api.elasticbeanstalk.com/api/v1/number/" + $scope.phoneNum + "?size=" + $scope.pageSize + "&page=" + $scope.pageNum).then(function (response) {
+            $scope.names = response.data.combinations;
+            $scope.entriesCount = response.data.count;
+            $scope.lastPage = response.data.pagination.lastPage;
+            $scope.nextPage = response.data.pagination.nextPage;
+            $scope.prevPage = response.data.pagination.previousPage;
+        });
+        $scope.testAjax = function () {
+            $http.get("http://www.mteng-ts-api.elasticbeanstalk.com/api/v1/number/" + $scope.phoneNum + "?size=" + $scope.pageSize + "&page=" + $scope.pageNum).then(function (response) {
+                $scope.names = response.data.combinations;
+                $scope.entriesCount = response.data.count;
+                $scope.lastPage = response.data.pagination.lastPage;
+                $scope.nextPage = response.data.pagination.nextPage;
+                $scope.prevPage = response.data.pagination.previousPage;
+            });
+        };
+        $scope.goLastPage = function () {
+            $scope.pageNum = $scope.lastPage;
+            $http.get("http://www.mteng-ts-api.elasticbeanstalk.com/api/v1/number/" + $scope.phoneNum + "?size=" + $scope.pageSize + "&page=" + $scope.pageNum).then(function (response) {
+                $scope.names = response.data.combinations;
+                $scope.entriesCount = response.data.count;
+                $scope.lastPage = response.data.pagination.lastPage;
+                $scope.nextPage = response.data.pagination.nextPage;
+                $scope.prevPage = response.data.pagination.previousPage;
+            });
+        };
+        $scope.goFirstPage = function () {
+            $scope.pageNum = "1";
+            $http.get("http://www.mteng-ts-api.elasticbeanstalk.com/api/v1/number/" + $scope.phoneNum + "?size=" + $scope.pageSize + "&page=" + $scope.pageNum).then(function (response) {
+                $scope.names = response.data.combinations;
+                $scope.entriesCount = response.data.count;
+                $scope.lastPage = response.data.pagination.lastPage;
+                $scope.nextPage = response.data.pagination.nextPage;
+                $scope.prevPage = response.data.pagination.previousPage;
+            });
+        };
+        $scope.goPrevPage = function () {
+            $scope.pageNum = $scope.prevPage;
+            $http.get("http://www.mteng-ts-api.elasticbeanstalk.com/api/v1/number/" + $scope.phoneNum + "?size=" + $scope.pageSize + "&page=" + $scope.pageNum).then(function (response) {
+                $scope.names = response.data.combinations;
+                $scope.entriesCount = response.data.count;
+                $scope.lastPage = response.data.pagination.lastPage;
+                $scope.nextPage = response.data.pagination.nextPage;
+                $scope.prevPage = response.data.pagination.previousPage;
+            });
+        };
+        $scope.goNextPage = function () {
+            $scope.pageNum = $scope.nextPage;
+            $http.get("http://www.mteng-ts-api.elasticbeanstalk.com/api/v1/number/" + $scope.phoneNum + "?size=" + $scope.pageSize + "&page=" + $scope.pageNum).then(function (response) {
+                $scope.names = response.data.combinations;
+                $scope.entriesCount = response.data.count;
+                $scope.lastPage = response.data.pagination.lastPage;
+                $scope.nextPage = response.data.pagination.nextPage;
+                $scope.prevPage = response.data.pagination.previousPage;
+            });
+        };
+        $scope.show = true;
+        $scope.showIf = function(){
+            if($scope.pageNum=1){
+                $scope.show = false;
+            }else{
+                $scope.show = true;
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
