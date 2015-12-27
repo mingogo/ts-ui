@@ -12,14 +12,13 @@ public class LandingPageController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String landingPage(ModelMap model) {
-        // return "jumbo";
         return "dashboard";
     }
 
-    @RequestMapping(value = "/jumbo", method = RequestMethod.GET)
-    public String junbo2Page(ModelMap model) {
-        return "jumbo";
-    }
+//    @RequestMapping(value = "/jumbo", method = RequestMethod.GET)
+//    public String junbo2Page(ModelMap model) {
+//        return "jumbo";
+//    }
     @RequestMapping(value = "/dashboard", method = RequestMethod.GET)
     public String ajaxPage(ModelMap model) {
         return "dashboard";

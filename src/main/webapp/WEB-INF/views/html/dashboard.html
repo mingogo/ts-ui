@@ -45,23 +45,22 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="jumbo">Home</a>
+            <a class="navbar-brand" href="/">Home</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <form class="navbar-form navbar-right">
                 <input type="text" placeholder="7/10 digits. e.g. 1234567" class="form-control" ng-model="phoneNum" required>
-                <button class="btn btn-success" type="submit" ng-click="testAjax()">Submit</button>
+                <button class="btn btn-success" type="submit" ng-click="testAjax()" >Submit</button>
             </form>
         </div><!--/.navbar-collapse -->
     </div>
 </nav>
 
-<!-- Main jumbotron for a primary marketing message or call to action -->
 <div class="jumbotron">
     <div class="container">
         <h1>Hello, Finra!</h1>
         <p> This is a simple web application generating all possible alphanumeric combinations based on the number input. Simply click on the sample output below or enter your own on the top banner. </p>
-        <p><a class="btn btn-primary btn-lg" href="dashboard" role="button">Sample output &raquo;</a></p>
+        <p><a class="btn btn-primary btn-lg" href="/" role="button">Sample output &raquo;</a></p>
     </div>
 </div>
 
@@ -186,14 +185,6 @@
                 $scope.prevPage = response.data.pagination.previousPage;
             });
         };
-        $scope.show = true;
-        $scope.showIf = function(){
-            if($scope.pageNum=1){
-                $scope.show = false;
-            }else{
-                $scope.show = true;
-            }
-        }
     });
 </script>
 
