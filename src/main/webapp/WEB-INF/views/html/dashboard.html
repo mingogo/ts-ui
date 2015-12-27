@@ -6,31 +6,16 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="/resources/core/favicon.ico">
-
-    <title>Dashboard</title>
-
-    <!-- Bootstrap core CSS -->
     <link href="/resources/core/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <link href="/resources/core/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
     <link href="/resources/core/css/dashboard.css" rel="stylesheet">
-
-    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]>
-    <script src="/resources/core/assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="/resources/core/assets/js/ie8-responsive-file-warning.js"></script>
     <script src="/resources/core/assets/js/ie-emulation-modes-warning.js"></script>
-
-    <!--AngularJS-->
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-
-
+    <title>Hello Finra</title>
 </head>
 
 <body ng-app="myApp" ng-controller="formControl">
@@ -48,40 +33,53 @@
             <a class="navbar-brand" href="/">Home</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-            <form class="navbar-form navbar-right">
-                <input type="text" placeholder="7/10 digits. e.g. 1234567" class="form-control" ng-model="phoneNum" required>
-                <button class="btn btn-success" type="submit" ng-click="testAjax()" >Submit</button>
+            <form class="navbar-form navbar-right" name="inputForm" ng-submit="submitForm(inputForm.$valid)" novalidate>
+                <input type="text" name="name" placeholder="Fill me up :)" class="form-control"
+                       ng-model="phoneNum" required ng-pattern="onlyNumbers">
+                <button ng-disabled="inputForm.$invalid" class="btn btn-success" type="submit" ng-click="testAjax()">
+                    Submit
+                </button>
             </form>
-        </div><!--/.navbar-collapse -->
+        </div>
     </div>
 </nav>
+
+<div class="container">
+    <br>
+
+    <div style="text-align: center;" ng-show="inputForm.name.$invalid && !inputForm.name.$pristine"
+         class="alert alert-danger" role="alert">Invalid Parameters - (a) This field cannot be blank, (b) only 7 or 10 numerical digits
+        are accepted. e.g. 1234567890, 1234567
+    </div>
+</div>
 
 <div class="jumbotron">
     <div class="container">
         <h1>Hello, Finra!</h1>
-        <p> This is a simple web application generating all possible alphanumeric combinations based on the number input. Simply click on the sample output below or enter your own on the top banner. </p>
+
+        <p> This is a simple web application generating all possible alphanumeric combinations based on the number
+            input. Click on the sample output below or enter your own on the top banner. </p>
+
         <p><a class="btn btn-primary btn-lg" href="/" role="button">Sample output &raquo;</a></p>
     </div>
 </div>
 
 <div class="container">
-    <div class="row">
-        <h2 class="sub-header">{{phoneNum}}, {{entriesCount}} combination(s) found:</h2>
+    <h2 class="sub-header">{{phoneNum}}, {{entriesCount}} combination(s) found:</h2>
 
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th>#</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr ng-repeat="x in names">
-                    <td> {{x}}</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>#</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="x in names">
+                <td> {{x}}</td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 
@@ -104,12 +102,12 @@
     <footer>
         <div class="row">
             <div class="col-center-block">
-                <p style="text-align: center;">&copy; 2015 Ming Teng, all rights reserved. Powered by Spring Boot,
-                    SpringMVC, Amazon EC2/ ElasticBeanstalk, Google App Engine and Bootstrap.</p>
+                <p style="text-align: center;">&copy; 2015 Ming Teng, All rights reserved. Powered by Spring Boot,
+                    SpringMVC, AngularJS, Amazon EC2/ElasticBeanstalk (API), Google App Engine (UI) and Bootstrap.</p>
             </div>
         </div>
     </footer>
-</div> <!-- /container -->
+</div>
 
 <!-- Bootstrap core JavaScript
 ================================================== -->
@@ -118,72 +116,43 @@
 <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
 <script src="/resources/core/dist/js/bootstrap.min.js"></script>
 <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
-<script src="/resources/core/assets/js/vendor/holder.min.js"></script>
-<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<!--<script src="/resources/core/assets/js/vendor/holder.min.js"></script>-->
 <script src="resources/core/assets/js/ie10-viewport-bug-workaround.js"></script>
 <script>
     var app = angular.module('myApp', []);
 
     app.controller('formControl', function ($scope, $http) {
+        $scope.testAjax = function () {
+            $http.get("http://www.mteng-ts-api.elasticbeanstalk.com/api/v1/number/" +
+                    $scope.phoneNum + "?size=" + $scope.pageSize + "&page=" + $scope.pageNum).then(function (response) {
+                $scope.names = response.data.combinations;
+                $scope.entriesCount = response.data.count;
+                $scope.lastPage = response.data.pagination.lastPage;
+                $scope.nextPage = response.data.pagination.nextPage;
+                $scope.prevPage = response.data.pagination.previousPage;
+            });
+        };
+        $scope.onlyNumbers = /^(\d{7}|\d{10})$/;
         $scope.pageSize = "10";
         $scope.pageNum = "1";
         $scope.phoneNum = "3612321754";
         $scope.entriesCount = "0";
-        $http.get("http://www.mteng-ts-api.elasticbeanstalk.com/api/v1/number/" + $scope.phoneNum + "?size=" + $scope.pageSize + "&page=" + $scope.pageNum).then(function (response) {
-            $scope.names = response.data.combinations;
-            $scope.entriesCount = response.data.count;
-            $scope.lastPage = response.data.pagination.lastPage;
-            $scope.nextPage = response.data.pagination.nextPage;
-            $scope.prevPage = response.data.pagination.previousPage;
-        });
-        $scope.testAjax = function () {
-            $http.get("http://www.mteng-ts-api.elasticbeanstalk.com/api/v1/number/" + $scope.phoneNum + "?size=" + $scope.pageSize + "&page=" + $scope.pageNum).then(function (response) {
-                $scope.names = response.data.combinations;
-                $scope.entriesCount = response.data.count;
-                $scope.lastPage = response.data.pagination.lastPage;
-                $scope.nextPage = response.data.pagination.nextPage;
-                $scope.prevPage = response.data.pagination.previousPage;
-            });
-        };
+        $scope.testAjax();
         $scope.goLastPage = function () {
             $scope.pageNum = $scope.lastPage;
-            $http.get("http://www.mteng-ts-api.elasticbeanstalk.com/api/v1/number/" + $scope.phoneNum + "?size=" + $scope.pageSize + "&page=" + $scope.pageNum).then(function (response) {
-                $scope.names = response.data.combinations;
-                $scope.entriesCount = response.data.count;
-                $scope.lastPage = response.data.pagination.lastPage;
-                $scope.nextPage = response.data.pagination.nextPage;
-                $scope.prevPage = response.data.pagination.previousPage;
-            });
+            $scope.testAjax();
         };
         $scope.goFirstPage = function () {
             $scope.pageNum = "1";
-            $http.get("http://www.mteng-ts-api.elasticbeanstalk.com/api/v1/number/" + $scope.phoneNum + "?size=" + $scope.pageSize + "&page=" + $scope.pageNum).then(function (response) {
-                $scope.names = response.data.combinations;
-                $scope.entriesCount = response.data.count;
-                $scope.lastPage = response.data.pagination.lastPage;
-                $scope.nextPage = response.data.pagination.nextPage;
-                $scope.prevPage = response.data.pagination.previousPage;
-            });
+            $scope.testAjax();
         };
         $scope.goPrevPage = function () {
             $scope.pageNum = $scope.prevPage;
-            $http.get("http://www.mteng-ts-api.elasticbeanstalk.com/api/v1/number/" + $scope.phoneNum + "?size=" + $scope.pageSize + "&page=" + $scope.pageNum).then(function (response) {
-                $scope.names = response.data.combinations;
-                $scope.entriesCount = response.data.count;
-                $scope.lastPage = response.data.pagination.lastPage;
-                $scope.nextPage = response.data.pagination.nextPage;
-                $scope.prevPage = response.data.pagination.previousPage;
-            });
+            $scope.testAjax();
         };
         $scope.goNextPage = function () {
             $scope.pageNum = $scope.nextPage;
-            $http.get("http://www.mteng-ts-api.elasticbeanstalk.com/api/v1/number/" + $scope.phoneNum + "?size=" + $scope.pageSize + "&page=" + $scope.pageNum).then(function (response) {
-                $scope.names = response.data.combinations;
-                $scope.entriesCount = response.data.count;
-                $scope.lastPage = response.data.pagination.lastPage;
-                $scope.nextPage = response.data.pagination.nextPage;
-                $scope.prevPage = response.data.pagination.previousPage;
-            });
+            $scope.testAjax();
         };
     });
 </script>
